@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PROFESSOR PROFIT – MAJORS STRATEGY TRACK RECORD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family:-apple-system,Arial,sans-serif; background:#020617; color:#e5e7eb; padding:20px; }
+.container { max-width:1100px; margin:auto; background:#0f172a; padding:25px; border-radius:16px; }
+h1 { margin:0; font-size:28px; font-weight:700; }
+h2 { margin-top:25px; font-size:20px; }
+table { width:100%; border-collapse:collapse; margin-top:15px; font-size:14px; }
+th, td { padding:8px 10px; border-bottom:1px solid #1f2937; white-space:nowrap; }
+th { color:#9ca3af; text-transform:uppercase; font-size:12px; }
+.pill { padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+.win { background:rgba(22,163,74,.2); color:#4ade80; }
+.loss { background:rgba(220,38,38,.2); color:#f87171; }
+.be { background:rgba(148,163,184,.2); color:#e5e7eb; }
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>PROFESSOR PROFIT – MAJORS STRATEGY TRACK RECORD</h1>
+<p>2023–2025 Combined | Real R-Based Performance</p>
+
+<h2>Equity Curve</h2>
+<canvas id="equityChart" height="120"></canvas>
+
+<h2>Full Trade Log</h2>
+<table id="tradeTable">
+<thead>
+<tr><th>#</th><th>Date</th><th>Pair</th><th>Result</th><th>R</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<script>
+// FULL TRADE LIST
+const trades = [
+{date:"03/01/2023",pair:"AUDUSD",rr:2},
+{date:"04/01/2023",pair:"GBPUSD",rr:2},
+{date:"27/01/2023",pair:"USDCHF",rr:-1},
+{date:"22/02/2023",pair:"USDCHF",rr:-1},
+{date:"01/03/2023",pair:"USDJPY",rr:2},
+{date:"06/03/2023",pair:"AUDUSD",rr:-1},
+{date:"22/03/2023",pair:"GBPUSD",rr:0},
+{date:"23/03/2023",pair:"USDCAD",rr:2},
+{date:"11/04/2023",pair:"GBPUSD",rr:0},
+{date:"19/04/2023",pair:"USDCHF",rr:0},
+{date:"20/04/2023",pair:"EURUSD",rr:-1},
+{date:"09/06/2023",pair:"USDCAD",rr:-1},
+{date:"16/06/2023",pair:"EURUSD",rr:2},
+{date:"29/06/2023",pair:"GBPUSD",rr:2},
+{date:"31/08/2023",pair:"NZDUSD",rr:0},
+{date:"17/10/2023",pair:"USDCHF",rr:-1},
+{date:"07/11/2023",pair:"AUDUSD",rr:2},
+{date:"08/11/2023",pair:"EURUSD",rr:2},
+{date:"09/11/2023",pair:"AUDUSD",rr:0},
+{date:"15/11/2023",pair:"AUDUSD",rr:0},
+{date:"21/11/2023",pair:"USDCHF",rr:0},
+{date:"06/12/2023",pair:"EURUSD",rr:0},
+{date:"08/12/2023",pair:"NZDUSD",rr:2},
+
+{date:"10/01/2024",pair:"NZDUSD",rr:-1},
+{date:"12/01/2024",pair:"AUDUSD",rr:2},
+{date:"12/01/2024",pair:"NZDUSD",rr:2},
+{date:"15/01/2024",pair:"GBPUSD",rr:-1},
+{date:"19/01/2024",pair:"USDCHF",rr:0},
+{date:"30/01/2024",pair:"EURUSD",rr:0},
+{date:"09/02/2024",pair:"EURUSD",rr:-1},
+{date:"12/02/2024",pair:"USDJPY",rr:2},
+{date:"23/02/2024",pair:"USDJPY",rr:2},
+{date:"05/03/2024",pair:"USDCHF",rr:0},
+{date:"12/03/2024",pair:"EURUSD",rr:2},
+{date:"12/03/2024",pair:"AUDUSD",rr:2},
+{date:"12/03/2024",pair:"USDCAD",rr:0},
+{date:"28/03/2024",pair:"GBPUSD",rr:2},
+{date:"11/04/2024",pair:"EURUSD",rr:0},
+{date:"25/04/2024",pair:"USDCHF",rr:0},
+{date:"17/05/2024",pair:"AUDUSD",rr:2},
+{date:"17/05/2024",pair:"USDCAD",rr:0},
+{date:"27/05/2024",pair:"USDCHF",rr:0},
+{date:"31/05/2024",pair:"GBPUSD",rr:0},
+{date:"02/07/2024",pair:"EURUSD",rr:0},
+{date:"15/07/2024",pair:"GBPUSD",rr:0},
+{date:"22/07/2024",pair:"EURUSD",rr:0},
+{date:"26/07/2024",pair:"USDJPY",rr:2},
+{date:"05/08/2024",pair:"USDCAD",rr:-1},
+{date:"14/08/2024",pair:"USDCAD",rr:0},
+{date:"27/08/2024",pair:"USDCAD",rr:-1},
+{date:"11/09/2024",pair:"AUDUSD",rr:0},
+{date:"11/09/2024",pair:"EURUSD",rr:2},
+{date:"16/09/2024",pair:"USDCHF",rr:-1},
+{date:"01/10/2024",pair:"AUDUSD",rr:-1},
+{date:"01/10/2024",pair:"USDCAD",rr:2},
+{date:"24/10/2024",pair:"USDCAD",rr:2},
+{date:"29/10/2024",pair:"NZDUSD",rr:2},
+{date:"18/11/2024",pair:"NZDUSD",rr:2},
+{date:"19/11/2024",pair:"USDCAD",rr:-1},
+
+{date:"27/02/2025",pair:"USDJPY",rr:-1},
+{date:"27/03/2025",pair:"GBPUSD",rr:2},
+{date:"01/04/2025",pair:"GBPUSD",rr:2},
+{date:"15/05/2025",pair:"USDCAD",rr:-1},
+{date:"06/06/2025",pair:"AUDUSD",rr:2},
+{date:"16/06/2025",pair:"USDCHF",rr:-1},
+{date:"08/07/2025",pair:"GBPUSD",rr:0},
+{date:"04/08/2025",pair:"GBPUSD",rr:0},
+{date:"11/08/2025",pair:"GBPUSD",rr:2},
+{date:"19/08/2025",pair:"USDCHF",rr:2},
+{date:"27/08/2025",pair:"GBPUSD",rr:2},
+{date:"27/08/2025",pair:"AUDUSD",rr:2},
+{date:"10/09/2025",pair:"AUDUSD",rr:0},
+{date:"01/10/2025",pair:"EURUSD",rr:2},
+{date:"01/10/2025",pair:"USDCHF",rr:2},
+{date:"10/10/2025",pair:"GBPUSD",rr:2},
+{date:"05/11/2025",pair:"EURUSD",rr:2},
+{date:"10/11/2025",pair:"GBPUSD",rr:2},
+{date:"12/11/2025",pair:"AUDUSD",rr:-1},
+{date:"24/22/2025",pair:"EURUSD",rr:2}
+];
+
+let equity=[0], total=0;
+let tbody=document.querySelector("#tradeTable tbody");
+
+trades.forEach((t,i)=>{
+ total+=t.rr;
+ equity.push(total);
+ let r = t.rr>0?"WIN":t.rr<0?"LOSS":"BE";
+ let cls = r==="WIN"?"win":r==="LOSS"?"loss":"be";
+ tbody.innerHTML += `<tr>
+ <td>${i+1}</td><td>${t.date}</td><td>${t.pair}</td>
+ <td><span class="pill ${cls}">${r}</span></td>
+ <td>${t.rr>0?"+":""}${t.rr}R</td>
+ </tr>`;
+});
+
+new Chart(document.getElementById("equityChart"),{
+ type:"line",
+ data:{labels:equity.map((_,i)=>i),datasets:[{data:equity,borderWidth:2,tension:.25,pointRadius:0}]},
+ options:{plugins:{legend:{display:false}}}
+});
+</script>
+
+</body>
+</html>
