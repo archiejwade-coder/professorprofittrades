@@ -1,315 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Professor Profit Verified Track Record</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-  :root {
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    color-scheme:dark;
-  }
-  body {
-    margin:0;
-    padding:0;
-    background:radial-gradient(circle at top,#020617 0,#020617 40%,#000 100%);
-    color:#e5e7eb;
-  }
-  .wrapper {
-    max-width:1200px;
-    margin:0 auto;
-    padding:24px 16px 40px;
-  }
-  .card {
-    background:#020617;
-    border-radius:18px;
-    padding:20px 18px;
-    margin-bottom:20px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.7);
-    border:1px solid #1f2937;
-  }
-  @media (min-width: 768px) {
-    .card { padding:24px 26px; margin-bottom:24px; }
-  }
+  <meta charset="UTF-8" />
+  <title>Professor Profit Verified Track Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  .hero {
-    display:flex;
-    gap:18px;
-    align-items:center;
-    flex-wrap:wrap;
-  }
-  .hero-logo {
-    width:70px;
-    height:70px;
-    border-radius:16px;
-    overflow:hidden;
-    flex-shrink:0;
-    background:#020617;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid #1f2937;
-  }
-  .hero-logo img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-  .hero-text h1 {
-    margin:0;
-    font-size:1.8rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-  .hero-sub {
-    margin-top:4px;
-    font-size:.9rem;
-    color:#9ca3af;
-  }
-  .hero-tagline {
-    margin-top:8px;
-    font-size:.85rem;
-    color:#6ee7b7;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-  }
-
-  .stats-layout {
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-  }
-  @media (min-width: 900px) {
-    .stats-layout {
-      flex-direction:row;
-      align-items:stretch;
+  <style>
+    * {
+      box-sizing: border-box;
     }
-  }
-  .stats-grid {
-    flex:1;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px;
-  }
-  .stat {
-    background:radial-gradient(circle at top left,#1f2937,#020617);
-    border-radius:12px;
-    padding:12px 12px;
-    border:1px solid rgba(148,163,184,.4);
-  }
-  .stat-label {
-    font-size:.7rem;
-    text-transform:uppercase;
-    letter-spacing:.16em;
-    color:#9ca3af;
-  }
-  .stat-value {
-    margin-top:4px;
-    font-size:1.2rem;
-    font-weight:600;
-  }
-  .stat-note {
-    margin-top:2px;
-    font-size:.72rem;
-    color:#9ca3af;
-  }
 
-  .chart-wrap {
-    flex:1;
-    background:#020617;
-    border-radius:12px;
-    padding:14px 12px 18px;
-    border:1px solid #1f2937;
-  }
-  .section-title {
-    margin:0 0 10px;
-    font-size:1rem;
-    font-weight:600;
-  }
+    body {
+      font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      color: #e5e7eb;
+      background:
+        radial-gradient(circle at top, #0f172a 0, #020617 40%, #000 100%);
+    }
 
-  .info-box {
-    background:#020617;
-    border-radius:12px;
-    padding:16px 14px;
-    border:1px solid #1f2937;
-    font-size:.9rem;
-    line-height:1.6;
-  }
-  .info-box ul {
-    margin:8px 0 0 18px;
-    padding:0;
-  }
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
 
-  .pair-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px;
-  }
-  .pair-card {
-    background:#020617;
-    border-radius:10px;
-    padding:10px 12px;
-    border:1px solid #1f2937;
-    font-size:.8rem;
-  }
-  .pair-name {
-    font-weight:600;
-    letter-spacing:.08em;
-    font-size:.75rem;
-    text-transform:uppercase;
-    color:#9ca3af;
-  }
-  .pair-line {
-    margin-top:3px;
-  }
+    /* Sticky nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      padding: 10px 18px;
+      margin: -20px -16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.98),
+        rgba(15, 23, 42, 0.92)
+      );
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+    }
 
-  .log-wrap {
-    border-radius:12px;
-    border:1px solid #111827;
-    max-height:460px;
-    overflow:auto;
-    background:#020617;
-  }
-  table {
-    width:100%;
-    border-collapse:collapse;
-    font-size:.8rem;
-    min-width:600px;
-  }
-  thead {
-    position:sticky;
-    top:0;
-    background:#020617;
-    z-index:1;
-  }
-  th, td {
-    padding:7px 10px;
-    border-bottom:1px solid #111827;
-    white-space:nowrap;
-  }
-  th {
-    font-size:.68rem;
-    text-transform:uppercase;
-    letter-spacing:.12em;
-    color:#9ca3af;
-  }
-  tbody tr:nth-child(even) {
-    background:rgba(15,23,42,.75);
-  }
-  .pill {
-    display:inline-flex;
-    align-items:center;
-    padding:3px 9px;
-    border-radius:999px;
-    font-size:.7rem;
-    font-weight:600;
-  }
-  .win { background:rgba(16,185,129,.2); color:#4ade80; }
-  .loss { background:rgba(239,68,68,.2); color:#fca5a5; }
-  .be { background:rgba(156,163,175,.2); color:#e5e7eb; }
+    .logo-mini {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  .footer {
-    text-align:center;
-    font-size:.72rem;
-    color:#6b7280;
-    margin-top:24px;
-  }
-</style>
+    .logo-mini img {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+    }
+
+    .logo-mini span {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+      text-decoration: none;
+      margin-left: 14px;
+    }
+
+    .nav-links a:hover {
+      color: #e5e7eb;
+    }
+
+    /* Cards */
+
+    .card {
+      background: radial-gradient(circle at top left,
+      rgba(56, 189, 248, 0.18),
+      rgba(15, 23, 42, 0.98));
+      border-radius: 22px;
+      padding: 20px 18px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: 0 26px 90px rgba(15, 23, 42, 0.95);
+    }
+
+    .card-glass {
+      background: linear-gradient(
+        to bottom right,
+        rgba(15, 23, 42, 0.98),
+        rgba(15, 23, 42, 0.96)
+      );
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Hero */
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 30px;
+      padding: 4px;
+      background: radial-gradient(circle at top, #38bdf8, #0f172a);
+      box-shadow:
+        0 0 40px rgba(56, 189, 248, 0.65),
+        0 0 90px rgba(59, 130, 246, 0.5);
+    }
+
+    .hero-logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #020617;
+    }
+
+    .hero-logo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-text h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: rgba(22, 163, 74, 0.18);
+      color: #6ee7b7;
+    }
+
+    .hero-sub {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    /* Stats */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: radial-gradient(circle at top left,
+          rgba(79, 70, 229, 0.22),
+          rgba(15, 23, 42, 1));
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .stat-note {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .section-note {
+      font-size: 12px;
+      color: #9ca3af;
+      margin: 4px 0 0;
+    }
+
+    .info-box {
+      background: #020617;
+      border-radius: 14px;
+      padding: 12px 13px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .info-box ul {
+      padding-left: 18px;
+      margin: 6px 0 0;
+    }
+
+    /* Layout helpers */
+
+    .flex-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .half {
+      flex: 1;
+    }
+
+    @media (min-width: 900px) {
+      .flex-row {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    /* Pair table */
+
+    #pairTable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    #pairTable th,
+    #pairTable td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.96);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    #pairTable th {
+      color: #9ca3af;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    /* Trade log – desktop table */
+
+    #tradeTableDesktop {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    #tradeTableDesktop th,
+    #tradeTableDesktop td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.96);
+      white-space: nowrap;
+    }
+
+    #tradeTableDesktop th {
+      color: #9ca3af;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    #tradeTableDesktop tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.78);
+    }
+
+    /* Trade log – mobile cards */
+
+    .trade-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .trade-card {
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(31, 41, 55, 1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .trade-card-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trade-card-meta {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .trade-card-r {
+      font-weight: 600;
+    }
+
+    .pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .win {
+      background: rgba(22, 163, 74, 0.2);
+      color: #4ade80;
+    }
+
+    .loss {
+      background: rgba(220, 38, 38, 0.22);
+      color: #fb7185;
+    }
+
+    .be {
+      background: rgba(148, 163, 184, 0.25);
+      color: #e5e7eb;
+    }
+
+    .badge-pair {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.25);
+      color: #93c5fd;
+    }
+
+    .icon-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+    }
+
+    .icon-win {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+
+    .icon-loss {
+      background: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.9);
+    }
+
+    .icon-be {
+      background: #9ca3af;
+      box-shadow: 0 0 8px rgba(148, 163, 184, 0.9);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 24px;
+    }
+
+    /* Responsive behaviours */
+
+    @media (max-width: 799px) {
+      #tradeTableDesktop {
+        display: none;
+      }
+    }
+
+    @media (min-width: 800px) {
+      .trade-cards {
+        display: none;
+      }
+    }
+  </style>
 </head>
-<body>
-<div class="wrapper">
 
-  <!-- HERO -->
-  <div class="card">
-    <div class="hero">
-      <div class="hero-logo">
-        <!-- Make sure logo.png is uploaded next to index.html -->
-        <img src="logo.png" alt="Professor Profit Logo">
+<body>
+  <div class="wrapper">
+
+    <!-- Sticky nav -->
+    <div class="nav">
+      <div class="logo-mini">
+        <img src="logo.png" alt="Professor Profit">
+        <span>Professor Profit</span>
       </div>
-      <div class="hero-text">
-        <h1>Professor Profit Verified Track Record</h1>
-        <div class="hero-sub">
-          FX Majors Only · R-Based Risk Management · 2023–2025 Combined
+      <div class="nav-links">
+        <a href="#stats">Stats</a>
+        <a href="#equity">Equity</a>
+        <a href="#pairs">Pairs</a>
+        <a href="#trades">Trades</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="card">
+      <div class="hero">
+        <div class="hero-logo">
+          <div class="hero-logo-inner">
+            <img src="logo.png" alt="Professor Profit Logo" />
+          </div>
         </div>
-        <div class="hero-tagline">
-          Live trade log & cumulative R performance
+        <div class="hero-text">
+          <div class="hero-tag">Verified Track Record</div>
+          <h1>Professor Profit – Majors Strategy</h1>
+          <div class="hero-sub">
+            R-based performance on FX majors only. USDCHF removed from the system.
+            Fully transparent trade log 2023–2025.
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- STATS + EQUITY CURVE -->
-  <div class="card">
-    <div class="stats-layout">
+    <!-- Stats -->
+    <div class="card-glass" id="stats">
+      <h2>Key Performance Stats</h2>
       <div class="stats-grid">
         <div class="stat">
-          <div class="stat-label">Total Trades</div>
-          <div class="stat-value" id="stat-total-trades">–</div>
-          <div class="stat-note">Across 2023–2025</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Win Rate (excl. BE)</div>
-          <div class="stat-value" id="stat-winrate">–</div>
-          <div class="stat-note">Wins / (Wins + Losses)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Outcomes</div>
-          <div class="stat-value" id="stat-outcomes">–</div>
-          <div class="stat-note">Wins / Losses / BE</div>
-        </div>
-        <div class="stat">
           <div class="stat-label">Total R</div>
-          <div class="stat-value" id="stat-total-r">–</div>
-          <div class="stat-note">Cumulative risk units</div>
+          <div class="stat-value" id="stat-totalR">0R</div>
+          <div class="stat-note">Net R result across all majors trades.</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Average R / Trade</div>
-          <div class="stat-value" id="stat-avg-r">–</div>
-          <div class="stat-note">Total R ÷ trades</div>
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-value" id="stat-winrate">0%</div>
+          <div class="stat-note" id="stat-outcomes">–</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Trades Logged</div>
+          <div class="stat-value" id="stat-trades">0</div>
+          <div class="stat-note">All trades listed in the log below.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Years Covered</div>
+          <div class="stat-value" id="stat-years">–</div>
+          <div class="stat-note">Majors strategy performance window.</div>
         </div>
       </div>
-      <div class="chart-wrap">
-        <div class="section-title">Equity Curve (Cumulative R)</div>
-        <canvas id="equityChart" height="110"></canvas>
+    </div>
+
+    <!-- What is R -->
+    <div class="card-glass">
+      <h2>What is R?</h2>
+      <div class="info-box">
+        <p><b>R</b> is a fixed unit of risk per trade. It lets you compare results
+          without knowing the account size.</p>
+        <ul>
+          <li>If 1R = £100 of risk, then +2R = +£200 profit and -1R = -£100 loss.</li>
+          <li>Every trade on this page is measured in R, so results scale to any account size.</li>
+          <li>The equity curve below is cumulative R across all trades taken.</li>
+        </ul>
       </div>
     </div>
-  </div>
 
-  <!-- WHAT IS R -->
-  <div class="card">
-    <h2>What is R?</h2>
-    <div class="info-box">
-      <p><strong>“R”</strong> is a fixed unit of risk per trade.</p>
-      <p>If your stop-loss is £100 then:</p>
-      <ul>
-        <li><strong>+1R</strong> = +£100 profit</li>
-        <li><strong>+2R</strong> = +£200 profit</li>
-        <li><strong>-1R</strong> = -£100 loss</li>
-      </ul>
-      <p>
-        Using R means every trade is measured in the same risk unit,
-        regardless of lot size or pair. The equity curve on this page
-        shows the running total of R over all trades.
-      </p>
-      <p>
-        <strong>This is not account balance, it is strategy performance
-        in risk units.</strong>
-      </p>
+    <!-- Equity & pair charts -->
+    <div class="card-glass" id="equity">
+      <h2>Equity Curve & Pair Performance</h2>
+      <div class="flex-row">
+        <div class="half">
+          <p class="section-note">Cumulative R for the Majors strategy, plotted trade by trade.</p>
+          <canvas id="equityChart" height="140"></canvas>
+        </div>
+        <div class="half">
+          <p class="section-note">Total R per pair traded (USDCHF removed from the bot universe).</p>
+          <canvas id="pairBarChart" height="140"></canvas>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- PERFORMANCE BY PAIR -->
-  <div class="card">
-    <h2>Performance by Pair</h2>
-    <div class="pair-grid" id="pair-grid"></div>
-  </div>
+    <!-- Pair table -->
+    <div class="card-glass" id="pairs">
+      <h2>Performance by Pair</h2>
+      <p class="section-note">Summary by pair, excluding USDCHF.</p>
+      <table id="pairTable">
+        <thead>
+          <tr>
+            <th>Pair</th>
+            <th>Trades</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>BE</th>
+            <th>Total R</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
-  <!-- TRADE LOG -->
-  <div class="card">
-    <h2>Full Trade Log (2023–2025)</h2>
-    <div class="log-wrap">
-      <table id="trade-table">
+    <!-- Trade log -->
+    <div class="card-glass" id="trades">
+      <h2>Full Trade Log</h2>
+      <p class="section-note">Every recorded trade after removing USDCHF from the system.</p>
+
+      <!-- Mobile cards -->
+      <div class="trade-cards" id="tradeCards"></div>
+
+      <!-- Desktop table -->
+      <table id="tradeTableDesktop">
         <thead>
           <tr>
             <th>#</th>
@@ -322,184 +540,317 @@
         <tbody></tbody>
       </table>
     </div>
+
+    <div class="footer">
+      Professor Profit – Majors Strategy · Results in R units only. Educational use,
+      not financial advice.
+    </div>
+
   </div>
 
-  <div class="footer">
-    Generated from Professor Profit’s majors strategy logs (2023–2025).  
-    Any RR = 0 is treated as a break-even (BE) trade.
-  </div>
-</div>
+  <script>
+    /* ------- DATA (USDCHF REMOVED) ------- */
+    const trades = [
+      { date: "03/01/2023", pair: "AUDUSD", rr: 2 },
+      { date: "04/01/2023", pair: "GBPUSD", rr: 2 },
+      { date: "01/03/2023", pair: "USDJPY", rr: 2 },
+      { date: "06/03/2023", pair: "AUDUSD", rr: -1 },
+      { date: "22/03/2023", pair: "GBPUSD", rr: 0 },
+      { date: "23/03/2023", pair: "USDCAD", rr: 2 },
+      { date: "11/04/2023", pair: "GBPUSD", rr: 0 },
+      { date: "20/04/2023", pair: "EURUSD", rr: -1 },
+      { date: "09/06/2023", pair: "USDCAD", rr: -1 },
+      { date: "16/06/2023", pair: "EURUSD", rr: 2 },
+      { date: "29/06/2023", pair: "GBPUSD", rr: 2 },
+      { date: "31/08/2023", pair: "NZDUSD", rr: 0 },
+      { date: "07/11/2023", pair: "AUDUSD", rr: 2 },
+      { date: "08/11/2023", pair: "EURUSD", rr: 2 },
+      { date: "09/11/2023", pair: "AUDUSD", rr: 0 },
+      { date: "15/11/2023", pair: "AUDUSD", rr: 0 },
+      { date: "06/12/2023", pair: "EURUSD", rr: 0 },
+      { date: "08/12/2023", pair: "NZDUSD", rr: 2 },
 
-<script>
-// === FULL TRADE LIST (2023–2025) ===
-// date, pair, rr (R result)
-const trades = [
-  {date:"03/01/2023",pair:"AUDUSD",rr:2},
-  {date:"04/01/2023",pair:"GBPUSD",rr:2},
-  {date:"27/01/2023",pair:"USDCHF",rr:-1},
-  {date:"22/02/2023",pair:"USDCHF",rr:-1},
-  {date:"01/03/2023",pair:"USDJPY",rr:2},
-  {date:"06/03/2023",pair:"AUDUSD",rr:-1},
-  {date:"22/03/2023",pair:"GBPUSD",rr:0},
-  {date:"23/03/2023",pair:"USDCAD",rr:2},
-  {date:"11/04/2023",pair:"GBPUSD",rr:0},
-  {date:"19/04/2023",pair:"USDCHF",rr:0},
-  {date:"20/04/2023",pair:"EURUSD",rr:-1},
-  {date:"09/06/2023",pair:"USDCAD",rr:-1},
-  {date:"16/06/2023",pair:"EURUSD",rr:2},
-  {date:"29/06/2023",pair:"GBPUSD",rr:2},
-  {date:"31/08/2023",pair:"NZDUSD",rr:0},
-  {date:"17/10/2023",pair:"USDCHF",rr:-1},
-  {date:"07/11/2023",pair:"AUDUSD",rr:2},
-  {date:"08/11/2023",pair:"EURUSD",rr:2},
-  {date:"09/11/2023",pair:"AUDUSD",rr:0},
-  {date:"15/11/2023",pair:"AUDUSD",rr:0},
-  {date:"21/11/2023",pair:"USDCHF",rr:0},
-  {date:"06/12/2023",pair:"EURUSD",rr:0},
-  {date:"08/12/2023",pair:"NZDUSD",rr:2},
+      { date: "10/01/2024", pair: "NZDUSD", rr: -1 },
+      { date: "12/01/2024", pair: "AUDUSD", rr: 2 },
+      { date: "12/01/2024", pair: "NZDUSD", rr: 2 },
+      { date: "15/01/2024", pair: "GBPUSD", rr: -1 },
+      { date: "30/01/2024", pair: "EURUSD", rr: 0 },
+      { date: "09/02/2024", pair: "EURUSD", rr: -1 },
+      { date: "12/02/2024", pair: "USDJPY", rr: 2 },
+      { date: "23/02/2024", pair: "USDJPY", rr: 2 },
+      { date: "12/03/2024", pair: "EURUSD", rr: 2 },
+      { date: "12/03/2024", pair: "AUDUSD", rr: 2 },
+      { date: "12/03/2024", pair: "USDCAD", rr: 0 },
+      { date: "28/03/2024", pair: "GBPUSD", rr: 2 },
+      { date: "11/04/2024", pair: "EURUSD", rr: 0 },
+      { date: "17/05/2024", pair: "AUDUSD", rr: 2 },
+      { date: "17/05/2024", pair: "USDCAD", rr: 0 },
+      { date: "31/05/2024", pair: "GBPUSD", rr: 0 },
+      { date: "02/07/2024", pair: "EURUSD", rr: 0 },
+      { date: "15/07/2024", pair: "GBPUSD", rr: 0 },
+      { date: "22/07/2024", pair: "EURUSD", rr: 0 },
+      { date: "26/07/2024", pair: "USDJPY", rr: 2 },
+      { date: "05/08/2024", pair: "USDCAD", rr: -1 },
+      { date: "14/08/2024", pair: "USDCAD", rr: 0 },
+      { date: "27/08/2024", pair: "USDCAD", rr: -1 },
+      { date: "11/09/2024", pair: "AUDUSD", rr: 0 },
+      { date: "11/09/2024", pair: "EURUSD", rr: 2 },
+      { date: "01/10/2024", pair: "AUDUSD", rr: -1 },
+      { date: "01/10/2024", pair: "USDCAD", rr: 2 },
+      { date: "24/10/2024", pair: "USDCAD", rr: 2 },
+      { date: "29/10/2024", pair: "NZDUSD", rr: 2 },
+      { date: "18/11/2024", pair: "NZDUSD", rr: 2 },
+      { date: "19/11/2024", pair: "USDCAD", rr: -1 },
 
-  {date:"10/01/2024",pair:"NZDUSD",rr:-1},
-  {date:"12/01/2024",pair:"AUDUSD",rr:2},
-  {date:"12/01/2024",pair:"NZDUSD",rr:2},
-  {date:"15/01/2024",pair:"GBPUSD",rr:-1},
-  {date:"19/01/2024",pair:"USDCHF",rr:0},
-  {date:"30/01/2024",pair:"EURUSD",rr:0},
-  {date:"09/02/2024",pair:"EURUSD",rr:-1},
-  {date:"12/02/2024",pair:"USDJPY",rr:2},
-  {date:"23/02/2024",pair:"USDJPY",rr:2},
-  {date:"05/03/2024",pair:"USDCHF",rr:0},
-  {date:"12/03/2024",pair:"EURUSD",rr:2},
-  {date:"12/03/2024",pair:"AUDUSD",rr:2},
-  {date:"12/03/2024",pair:"USDCAD",rr:0},
-  {date:"28/03/2024",pair:"GBPUSD",rr:2},
-  {date:"11/04/2024",pair:"EURUSD",rr:0},
-  {date:"25/04/2024",pair:"USDCHF",rr:0},
-  {date:"17/05/2024",pair:"AUDUSD",rr:2},
-  {date:"17/05/2024",pair:"USDCAD",rr:0},
-  {date:"27/05/2024",pair:"USDCHF",rr:0},
-  {date:"31/05/2024",pair:"GBPUSD",rr:0},
-  {date:"02/07/2024",pair:"EURUSD",rr:0},
-  {date:"15/07/2024",pair:"GBPUSD",rr:0},
-  {date:"22/07/2024",pair:"EURUSD",rr:0},
-  {date:"26/07/2024",pair:"USDJPY",rr:2},
-  {date:"05/08/2024",pair:"USDCAD",rr:-1},
-  {date:"14/08/2024",pair:"USDCAD",rr:0},
-  {date:"27/08/2024",pair:"USDCAD",rr:-1},
-  {date:"11/09/2024",pair:"AUDUSD",rr:0},
-  {date:"11/09/2024",pair:"EURUSD",rr:2},
-  {date:"16/09/2024",pair:"USDCHF",rr:-1},
-  {date:"01/10/2024",pair:"AUDUSD",rr:-1},
-  {date:"01/10/2024",pair:"USDCAD",rr:2},
-  {date:"24/10/2024",pair:"USDCAD",rr:2},
-  {date:"29/10/2024",pair:"NZDUSD",rr:2},
-  {date:"18/11/2024",pair:"NZDUSD",rr:2},
-  {date:"19/11/2024",pair:"USDCAD",rr:-1},
+      { date: "27/02/2025", pair: "USDJPY", rr: -1 },
+      { date: "27/03/2025", pair: "GBPUSD", rr: 2 },
+      { date: "01/04/2025", pair: "GBPUSD", rr: 2 },
+      { date: "15/05/2025", pair: "USDCAD", rr: -1 },
+      { date: "06/06/2025", pair: "AUDUSD", rr: 2 },
+      { date: "08/07/2025", pair: "GBPUSD", rr: 0 },
+      { date: "04/08/2025", pair: "GBPUSD", rr: 0 },
+      { date: "11/08/2025", pair: "GBPUSD", rr: 2 },
+      { date: "27/08/2025", pair: "GBPUSD", rr: 2 },
+      { date: "27/08/2025", pair: "AUDUSD", rr: 2 },
+      { date: "10/09/2025", pair: "AUDUSD", rr: 0 },
+      { date: "01/10/2025", pair: "EURUSD", rr: 2 },
+      { date: "10/10/2025", pair: "GBPUSD", rr: 2 },
+      { date: "05/11/2025", pair: "EURUSD", rr: 2 },
+      { date: "10/11/2025", pair: "GBPUSD", rr: 2 },
+      { date: "12/11/2025", pair: "AUDUSD", rr: -1 },
+      { date: "24/11/2025", pair: "EURUSD", rr: 2 }
+    ];
 
-  {date:"27/02/2025",pair:"USDJPY",rr:-1},
-  {date:"27/03/2025",pair:"GBPUSD",rr:2},
-  {date:"01/04/2025",pair:"GBPUSD",rr:2},
-  {date:"15/05/2025",pair:"USDCAD",rr:-1},
-  {date:"06/06/2025",pair:"AUDUSD",rr:2},
-  {date:"16/06/2025",pair:"USDCHF",rr:-1},
-  {date:"08/07/2025",pair:"GBPUSD",rr:0},
-  {date:"04/08/2025",pair:"GBPUSD",rr:0},
-  {date:"11/08/2025",pair:"GBPUSD",rr:2},
-  {date:"19/08/2025",pair:"USDCHF",rr:2},
-  {date:"27/08/2025",pair:"GBPUSD",rr:2},
-  {date:"27/08/2025",pair:"AUDUSD",rr:2},
-  {date:"10/09/2025",pair:"AUDUSD",rr:0},
-  {date:"01/10/2025",pair:"EURUSD",rr:2},
-  {date:"01/10/2025",pair:"USDCHF",rr:2},
-  {date:"10/10/2025",pair:"GBPUSD",rr:2},
-  {date:"05/11/2025",pair:"EURUSD",rr:2},
-  {date:"10/11/2025",pair:"GBPUSD",rr:2},
-  {date:"12/11/2025",pair:"AUDUSD",rr:-1},
-  {date:"24/11/2025",pair:"EURUSD",rr:2}
-];
+    /* ---- helpers ---- */
 
-// === BUILD TABLE, STATS & EQUITY ===
-const tbody = document.querySelector("#trade-table tbody");
-const pairGrid = document.getElementById("pair-grid");
-
-let equity = [0];
-let totalR = 0;
-let wins = 0, losses = 0, bes = 0;
-const perPair = {};
-
-trades.forEach((t, idx) => {
-  totalR += t.rr;
-  equity.push(totalR);
-
-  let res;
-  if (t.rr > 0) { res = "WIN"; wins++; }
-  else if (t.rr < 0) { res = "LOSS"; losses++; }
-  else { res = "BE"; bes++; }
-
-  if (!perPair[t.pair]) perPair[t.pair] = { trades:0, r:0 };
-  perPair[t.pair].trades++;
-  perPair[t.pair].r += t.rr;
-
-  const cls = res === "WIN" ? "win" : res === "LOSS" ? "loss" : "be";
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${idx+1}</td>
-    <td>${t.date}</td>
-    <td>${t.pair}</td>
-    <td><span class="pill ${cls}">${res}</span></td>
-    <td>${t.rr>0?"+":""}${t.rr}R</td>
-  `;
-  tbody.appendChild(row);
-});
-
-// Headline stats
-const totalTrades = trades.length;
-const effective = wins + losses;
-const winrate = effective ? (wins / effective * 100).toFixed(1) + "%" : "0.0%";
-const avgR = totalTrades ? (totalR / totalTrades).toFixed(2) : "0.00";
-
-document.getElementById("stat-total-trades").textContent = totalTrades;
-document.getElementById("stat-winrate").textContent = winrate;
-document.getElementById("stat-outcomes").textContent =
-  `${wins} W / ${losses} L / ${bes} BE`;
-document.getElementById("stat-total-r").textContent =
-  (totalR>0?"+":"") + totalR.toString() + "R";
-document.getElementById("stat-avg-r").textContent =
-  (avgR>0?"+":"") + avgR + "R";
-
-// Pair performance cards
-Object.entries(perPair).forEach(([pair, stats]) => {
-  const card = document.createElement("div");
-  const avg = stats.trades ? (stats.r / stats.trades).toFixed(2) : "0.00";
-  card.className = "pair-card";
-  card.innerHTML = `
-    <div class="pair-name">${pair}</div>
-    <div class="pair-line"><strong>${stats.trades}</strong> trades · <strong>${stats.r>0?"+":""}${stats.r}R</strong></div>
-    <div class="pair-line">Avg <strong>${avg>0?"+":""}${avg}R</strong> per trade</div>
-  `;
-  pairGrid.appendChild(card);
-});
-
-// Equity curve
-const labels = equity.map((_,i)=>i===0?"Start":`T${i}`);
-new Chart(document.getElementById("equityChart"),{
-  type:"line",
-  data:{
-    labels,
-    datasets:[{
-      data:equity,
-      borderWidth:3,
-      tension:.25,
-      pointRadius:0
-    }]
-  },
-  options:{
-    plugins:{legend:{display:false}},
-    scales:{
-      x:{ticks:{color:"#9ca3af"},grid:{display:false}},
-      y:{ticks:{color:"#9ca3af"},grid:{color:"#111827"}}
+    function animateNumber(el, start, end, duration, decimals, suffix) {
+      const startTime = performance.now();
+      function frame(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const value = start + (end - start) * progress;
+        el.textContent = value.toFixed(decimals) + (suffix || "");
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
-  }
-});
-</script>
+
+    function animateInt(el, start, end, duration) {
+      const startTime = performance.now();
+      function frame(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const value = Math.round(start + (end - start) * progress);
+        el.textContent = value;
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function buildStats(trades) {
+      let totalR = 0, wins = 0, losses = 0, be = 0;
+      const years = new Set();
+
+      trades.forEach(t => {
+        totalR += t.rr;
+        if (t.rr > 0) wins++;
+        else if (t.rr < 0) losses++;
+        else be++;
+        years.add(t.date.slice(-4));
+      });
+
+      const winrate = (wins + losses) > 0 ? (wins / (wins + losses) * 100) : 0;
+
+      const totalEl = document.getElementById("stat-totalR");
+      const wrEl = document.getElementById("stat-winrate");
+      const tradesEl = document.getElementById("stat-trades");
+
+      animateNumber(totalEl, 0, totalR, 1200, 1, "R");
+      animateNumber(wrEl, 0, winrate, 1200, 1, "%");
+      animateInt(tradesEl, 0, trades.length, 1000);
+
+      document.getElementById("stat-outcomes").textContent =
+        `${wins} wins / ${losses} losses / ${be} BE.`;
+      document.getElementById("stat-years").textContent =
+        Array.from(years).sort().join(" – ");
+    }
+
+    function buildEquityAndBars(trades) {
+      // Equity
+      let running = 0;
+      const equity = [0];
+      trades.forEach(t => {
+        running += t.rr;
+        equity.push(running);
+      });
+
+      const ctx = document.getElementById("equityChart");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: equity.map((_, i) => i),
+          datasets: [{
+            data: equity,
+            borderColor: "rgba(56, 189, 248, 1)",
+            backgroundColor: "rgba(56, 189, 248, 0.15)",
+            borderWidth: 3,
+            tension: 0.25,
+            pointRadius: 0,
+            fill: true
+          }]
+        },
+        options: {
+          animation: {
+            duration: 1400,
+            easing: "easeOutQuart"
+          },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              ticks: { display: false },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: "#9ca3af" },
+              grid: { color: "rgba(31, 41, 55, 0.9)" }
+            }
+          }
+        }
+      });
+
+      // Bar chart per pair
+      const byPair = {};
+      trades.forEach(t => {
+        if (!byPair[t.pair]) byPair[t.pair] = 0;
+        byPair[t.pair] += t.rr;
+      });
+
+      const labels = Object.keys(byPair).sort();
+      const data = labels.map(k => byPair[k]);
+
+      const ctxBar = document.getElementById("pairBarChart");
+      new Chart(ctxBar, {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [{
+            data,
+            backgroundColor: "rgba(59, 130, 246, 0.7)",
+            borderColor: "rgba(191, 219, 254, 1)",
+            borderWidth: 1
+          }]
+        },
+        options: {
+          animation: {
+            duration: 1200,
+            easing: "easeOutQuart"
+          },
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#9ca3af" },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: "#9ca3af" },
+              grid: { color: "rgba(31, 41, 55, 0.9)" }
+            }
+          }
+        }
+      });
+    }
+
+    function buildPairTable(trades) {
+      const byPair = {};
+      trades.forEach(t => {
+        if (!byPair[t.pair]) {
+          byPair[t.pair] = { trades: 0, wins: 0, losses: 0, be: 0, r: 0 };
+        }
+        const p = byPair[t.pair];
+        p.trades++;
+        p.r += t.rr;
+        if (t.rr > 0) p.wins++;
+        else if (t.rr < 0) p.losses++;
+        else p.be++;
+      });
+
+      const tbody = document.querySelector("#pairTable tbody");
+      tbody.innerHTML = "";
+
+      Object.keys(byPair).sort().forEach(pair => {
+        const p = byPair[pair];
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><span class="badge-pair">${pair}</span></td>
+          <td>${p.trades}</td>
+          <td>${p.wins}</td>
+          <td>${p.losses}</td>
+          <td>${p.be}</td>
+          <td>${p.r > 0 ? "+" : ""}${p.r.toFixed(1)}R</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function buildTrades(trades) {
+      const tbody = document.querySelector("#tradeTableDesktop tbody");
+      const cards = document.querySelector("#tradeCards");
+      tbody.innerHTML = "";
+      cards.innerHTML = "";
+
+      trades.forEach((t, i) => {
+        const rType = t.rr > 0 ? "WIN" : t.rr < 0 ? "LOSS" : "BE";
+        const cls = rType === "WIN" ? "win" : rType === "LOSS" ? "loss" : "be";
+        const dotClass =
+          rType === "WIN" ? "icon-win" :
+            rType === "LOSS" ? "icon-loss" :
+              "icon-be";
+
+        // Desktop row
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${t.date}</td>
+          <td><span class="badge-pair">${t.pair}</span></td>
+          <td>
+            <span class="pill ${cls}">
+              <span class="icon-dot ${dotClass}"></span>
+              ${rType}
+            </span>
+          </td>
+          <td>${t.rr > 0 ? "+" : ""}${t.rr}R</td>
+        `;
+        tbody.appendChild(tr);
+
+        // Mobile card
+        const card = document.createElement("div");
+        card.className = "trade-card";
+        card.innerHTML = `
+          <div class="trade-card-main">
+            <div><b>#${i + 1}</b> · <span class="badge-pair">${t.pair}</span></div>
+            <div class="trade-card-meta">${t.date}</div>
+          </div>
+          <div>
+            <div class="pill ${cls}">
+              <span class="icon-dot ${dotClass}"></span>
+              ${rType}
+            </div>
+            <div class="trade-card-r" style="text-align:right;margin-top:2px;">
+              ${t.rr > 0 ? "+" : ""}${t.rr}R
+            </div>
+          </div>
+        `;
+        cards.appendChild(card);
+      });
+    }
+
+    // Build everything
+    buildStats(trades);
+    buildEquityAndBars(trades);
+    buildPairTable(trades);
+    buildTrades(trades);
+  </script>
 </body>
 </html>
