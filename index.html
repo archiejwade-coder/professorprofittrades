@@ -1,149 +1,438 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>PROFESSOR PROFIT – MAJORS STRATEGY TRACK RECORD</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-body { font-family:-apple-system,Arial,sans-serif; background:#020617; color:#e5e7eb; padding:20px; }
-.container { max-width:1100px; margin:auto; background:#0f172a; padding:25px; border-radius:16px; }
-h1 { margin:0; font-size:28px; font-weight:700; }
-h2 { margin-top:25px; font-size:20px; }
-table { width:100%; border-collapse:collapse; margin-top:15px; font-size:14px; }
-th, td { padding:8px 10px; border-bottom:1px solid #1f2937; white-space:nowrap; }
-th { color:#9ca3af; text-transform:uppercase; font-size:12px; }
-.pill { padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
-.win { background:rgba(22,163,74,.2); color:#4ade80; }
-.loss { background:rgba(220,38,38,.2); color:#f87171; }
-.be { background:rgba(148,163,184,.2); color:#e5e7eb; }
-</style>
+  <meta charset="UTF-8">
+  <title>Professor Profit – Majors Strategy Track Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #0b1120;
+      --card-soft: #111827;
+      --accent: #38bdf8;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --win: #22c55e;
+      --loss: #ef4444;
+      --be: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 55%, #020617 100%);
+      color: var(--text);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #020617, #020617 35%, #020617 100%);
+      border-radius: 20px;
+      padding: 22px 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.1);
+      color: #7dd3fc;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .summary-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .summary-item {
+      flex: 1 1 120px;
+      background: rgba(15,23,42,0.9);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(31,41,55,0.8);
+    }
+
+    .summary-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .info-box {
+      background: rgba(15,23,42,0.95);
+      border-radius: 14px;
+      padding: 14px 14px;
+      border: 1px solid rgba(31,41,55,0.9);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .info-box ul {
+      margin: 6px 0 0 18px;
+      padding: 0;
+    }
+
+    .info-box li {
+      margin: 3px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 8px 8px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-align: left;
+      background: rgba(15,23,42,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .pill.win {
+      background: rgba(34,197,94,0.12);
+      color: var(--win);
+    }
+
+    .pill.loss {
+      background: rgba(239,68,68,0.16);
+      color: var(--loss);
+    }
+
+    .pill.be {
+      background: rgba(148,163,184,0.2);
+      color: var(--be);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 22px;
+      opacity: 0.6;
+    }
+
+    .table-wrapper {
+      max-height: 520px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(31,41,55,0.9);
+    }
+
+    @media (max-width: 720px) {
+      .card { padding: 18px 14px; border-radius: 16px; }
+      h1 { font-size: 22px; }
+      .summary-grid { flex-direction: column; }
+      th, td { font-size: 12px; padding: 7px 6px; }
+    }
+  </style>
 </head>
-
 <body>
-<div class="container">
-<h1>PROFESSOR PROFIT – MAJORS STRATEGY TRACK RECORD</h1>
-<p>2023–2025 Combined | Real R-Based Performance</p>
 
-<h2>Equity Curve</h2>
-<canvas id="equityChart" height="120"></canvas>
+<div class="wrapper">
 
-<h2>Full Trade Log</h2>
-<table id="tradeTable">
-<thead>
-<tr><th>#</th><th>Date</th><th>Pair</th><th>Result</th><th>R</th></tr>
-</thead>
-<tbody></tbody>
-</table>
+  <!-- HEADER -->
+  <div class="card">
+    <h1>Professor Profit – Majors Strategy Track Record</h1>
+    <p class="subtitle">Majors FX | R-based risk | 2023–2025 live trades</p>
+    <div class="badge">
+      <span>Verified R-log</span>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-label">Total R</div>
+        <div class="summary-value" id="stat-r">–</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Win rate</div>
+        <div class="summary-value" id="stat-wr">–</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Trades</div>
+        <div class="summary-value" id="stat-trades">–</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Max drawdown</div>
+        <div class="summary-value" id="stat-dd">–</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUITY CURVE -->
+  <div class="card">
+    <h2>Equity Curve (Cumulative R)</h2>
+    <canvas id="equityChart" height="120"></canvas>
+  </div>
+
+  <!-- WHAT IS R -->
+  <div class="card">
+    <h2>What is R?</h2>
+    <div class="info-box">
+      <p><strong>“R” is the fixed amount of risk per trade.</strong> It is the distance between your entry and stop-loss, expressed as 1R.</p>
+      <p>Example: if your risk per trade is £100, then:</p>
+      <ul>
+        <li><strong>+1R</strong> = +£100 profit</li>
+        <li><strong>+2R</strong> = +£200 profit</li>
+        <li><strong>-1R</strong> = -£100 loss</li>
+      </ul>
+      <p>Because every trade is measured in R, performance is comparable across different pairs, position sizes and account balances.</p>
+      <p><strong>The equity curve on this page is the running total of R across all trades – not account balance in £.</strong></p>
+    </div>
+  </div>
+
+  <!-- TRADE LOG -->
+  <div class="card">
+    <h2>Full Trade Log</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Pair</th>
+            <th>Result</th>
+            <th>R</th>
+          </tr>
+        </thead>
+        <tbody id="tradeTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2025 Professor Profit – Majors Strategy (R-based performance)
+  </div>
+
 </div>
 
 <script>
-// FULL TRADE LIST
-const trades = [
-{date:"03/01/2023",pair:"AUDUSD",rr:2},
-{date:"04/01/2023",pair:"GBPUSD",rr:2},
-{date:"27/01/2023",pair:"USDCHF",rr:-1},
-{date:"22/02/2023",pair:"USDCHF",rr:-1},
-{date:"01/03/2023",pair:"USDJPY",rr:2},
-{date:"06/03/2023",pair:"AUDUSD",rr:-1},
-{date:"22/03/2023",pair:"GBPUSD",rr:0},
-{date:"23/03/2023",pair:"USDCAD",rr:2},
-{date:"11/04/2023",pair:"GBPUSD",rr:0},
-{date:"19/04/2023",pair:"USDCHF",rr:0},
-{date:"20/04/2023",pair:"EURUSD",rr:-1},
-{date:"09/06/2023",pair:"USDCAD",rr:-1},
-{date:"16/06/2023",pair:"EURUSD",rr:2},
-{date:"29/06/2023",pair:"GBPUSD",rr:2},
-{date:"31/08/2023",pair:"NZDUSD",rr:0},
-{date:"17/10/2023",pair:"USDCHF",rr:-1},
-{date:"07/11/2023",pair:"AUDUSD",rr:2},
-{date:"08/11/2023",pair:"EURUSD",rr:2},
-{date:"09/11/2023",pair:"AUDUSD",rr:0},
-{date:"15/11/2023",pair:"AUDUSD",rr:0},
-{date:"21/11/2023",pair:"USDCHF",rr:0},
-{date:"06/12/2023",pair:"EURUSD",rr:0},
-{date:"08/12/2023",pair:"NZDUSD",rr:2},
+  // ---- TRADE DATA (2023–2025) ----
+  const trades = [
+    {date:"03/01/2023",pair:"AUDUSD",rr:2},
+    {date:"04/01/2023",pair:"GBPUSD",rr:2},
+    {date:"27/01/2023",pair:"USDCHF",rr:-1},
+    {date:"22/02/2023",pair:"USDCHF",rr:-1},
+    {date:"01/03/2023",pair:"USDJPY",rr:2},
+    {date:"06/03/2023",pair:"AUDUSD",rr:-1},
+    {date:"22/03/2023",pair:"GBPUSD",rr:0},
+    {date:"23/03/2023",pair:"USDCAD",rr:2},
+    {date:"11/04/2023",pair:"GBPUSD",rr:0},
+    {date:"19/04/2023",pair:"USDCHF",rr:0},
+    {date:"20/04/2023",pair:"EURUSD",rr:-1},
+    {date:"09/06/2023",pair:"USDCAD",rr:-1},
+    {date:"16/06/2023",pair:"EURUSD",rr:2},
+    {date:"29/06/2023",pair:"GBPUSD",rr:2},
+    {date:"31/08/2023",pair:"NZDUSD",rr:0},
+    {date:"17/10/2023",pair:"USDCHF",rr:-1},
+    {date:"07/11/2023",pair:"AUDUSD",rr:2},
+    {date:"08/11/2023",pair:"EURUSD",rr:2},
+    {date:"09/11/2023",pair:"AUDUSD",rr:0},
+    {date:"15/11/2023",pair:"AUDUSD",rr:0},
+    {date:"21/11/2023",pair:"USDCHF",rr:0},
+    {date:"06/12/2023",pair:"EURUSD",rr:0},
+    {date:"08/12/2023",pair:"NZDUSD",rr:2},
 
-{date:"10/01/2024",pair:"NZDUSD",rr:-1},
-{date:"12/01/2024",pair:"AUDUSD",rr:2},
-{date:"12/01/2024",pair:"NZDUSD",rr:2},
-{date:"15/01/2024",pair:"GBPUSD",rr:-1},
-{date:"19/01/2024",pair:"USDCHF",rr:0},
-{date:"30/01/2024",pair:"EURUSD",rr:0},
-{date:"09/02/2024",pair:"EURUSD",rr:-1},
-{date:"12/02/2024",pair:"USDJPY",rr:2},
-{date:"23/02/2024",pair:"USDJPY",rr:2},
-{date:"05/03/2024",pair:"USDCHF",rr:0},
-{date:"12/03/2024",pair:"EURUSD",rr:2},
-{date:"12/03/2024",pair:"AUDUSD",rr:2},
-{date:"12/03/2024",pair:"USDCAD",rr:0},
-{date:"28/03/2024",pair:"GBPUSD",rr:2},
-{date:"11/04/2024",pair:"EURUSD",rr:0},
-{date:"25/04/2024",pair:"USDCHF",rr:0},
-{date:"17/05/2024",pair:"AUDUSD",rr:2},
-{date:"17/05/2024",pair:"USDCAD",rr:0},
-{date:"27/05/2024",pair:"USDCHF",rr:0},
-{date:"31/05/2024",pair:"GBPUSD",rr:0},
-{date:"02/07/2024",pair:"EURUSD",rr:0},
-{date:"15/07/2024",pair:"GBPUSD",rr:0},
-{date:"22/07/2024",pair:"EURUSD",rr:0},
-{date:"26/07/2024",pair:"USDJPY",rr:2},
-{date:"05/08/2024",pair:"USDCAD",rr:-1},
-{date:"14/08/2024",pair:"USDCAD",rr:0},
-{date:"27/08/2024",pair:"USDCAD",rr:-1},
-{date:"11/09/2024",pair:"AUDUSD",rr:0},
-{date:"11/09/2024",pair:"EURUSD",rr:2},
-{date:"16/09/2024",pair:"USDCHF",rr:-1},
-{date:"01/10/2024",pair:"AUDUSD",rr:-1},
-{date:"01/10/2024",pair:"USDCAD",rr:2},
-{date:"24/10/2024",pair:"USDCAD",rr:2},
-{date:"29/10/2024",pair:"NZDUSD",rr:2},
-{date:"18/11/2024",pair:"NZDUSD",rr:2},
-{date:"19/11/2024",pair:"USDCAD",rr:-1},
+    {date:"10/01/2024",pair:"NZDUSD",rr:-1},
+    {date:"12/01/2024",pair:"AUDUSD",rr:2},
+    {date:"12/01/2024",pair:"NZDUSD",rr:2},
+    {date:"15/01/2024",pair:"GBPUSD",rr:-1},
+    {date:"19/01/2024",pair:"USDCHF",rr:0},
+    {date:"30/01/2024",pair:"EURUSD",rr:0},
+    {date:"09/02/2024",pair:"EURUSD",rr:-1},
+    {date:"12/02/2024",pair:"USDJPY",rr:2},
+    {date:"23/02/2024",pair:"USDJPY",rr:2},
+    {date:"05/03/2024",pair:"USDCHF",rr:0},
+    {date:"12/03/2024",pair:"EURUSD",rr:2},
+    {date:"12/03/2024",pair:"AUDUSD",rr:2},
+    {date:"12/03/2024",pair:"USDCAD",rr:0},
+    {date:"28/03/2024",pair:"GBPUSD",rr:2},
+    {date:"11/04/2024",pair:"EURUSD",rr:0},
+    {date:"25/04/2024",pair:"USDCHF",rr:0},
+    {date:"17/05/2024",pair:"AUDUSD",rr:2},
+    {date:"17/05/2024",pair:"USDCAD",rr:0},
+    {date:"27/05/2024",pair:"USDCHF",rr:0},
+    {date:"31/05/2024",pair:"GBPUSD",rr:0},
+    {date:"02/07/2024",pair:"EURUSD",rr:0},
+    {date:"15/07/2024",pair:"GBPUSD",rr:0},
+    {date:"22/07/2024",pair:"EURUSD",rr:0},
+    {date:"26/07/2024",pair:"USDJPY",rr:2},
+    {date:"05/08/2024",pair:"USDCAD",rr:-1},
+    {date:"14/08/2024",pair:"USDCAD",rr:0},
+    {date:"27/08/2024",pair:"USDCAD",rr:-1},
+    {date:"11/09/2024",pair:"AUDUSD",rr:0},
+    {date:"11/09/2024",pair:"EURUSD",rr:2},
+    {date:"16/09/2024",pair:"USDCHF",rr:-1},
+    {date:"01/10/2024",pair:"AUDUSD",rr:-1},
+    {date:"01/10/2024",pair:"USDCAD",rr:2},
+    {date:"24/10/2024",pair:"USDCAD",rr:2},
+    {date:"29/10/2024",pair:"NZDUSD",rr:2},
+    {date:"18/11/2024",pair:"NZDUSD",rr:2},
+    {date:"19/11/2024",pair:"USDCAD",rr:-1},
 
-{date:"27/02/2025",pair:"USDJPY",rr:-1},
-{date:"27/03/2025",pair:"GBPUSD",rr:2},
-{date:"01/04/2025",pair:"GBPUSD",rr:2},
-{date:"15/05/2025",pair:"USDCAD",rr:-1},
-{date:"06/06/2025",pair:"AUDUSD",rr:2},
-{date:"16/06/2025",pair:"USDCHF",rr:-1},
-{date:"08/07/2025",pair:"GBPUSD",rr:0},
-{date:"04/08/2025",pair:"GBPUSD",rr:0},
-{date:"11/08/2025",pair:"GBPUSD",rr:2},
-{date:"19/08/2025",pair:"USDCHF",rr:2},
-{date:"27/08/2025",pair:"GBPUSD",rr:2},
-{date:"27/08/2025",pair:"AUDUSD",rr:2},
-{date:"10/09/2025",pair:"AUDUSD",rr:0},
-{date:"01/10/2025",pair:"EURUSD",rr:2},
-{date:"01/10/2025",pair:"USDCHF",rr:2},
-{date:"10/10/2025",pair:"GBPUSD",rr:2},
-{date:"05/11/2025",pair:"EURUSD",rr:2},
-{date:"10/11/2025",pair:"GBPUSD",rr:2},
-{date:"12/11/2025",pair:"AUDUSD",rr:-1},
-{date:"24/22/2025",pair:"EURUSD",rr:2}
-];
+    {date:"27/02/2025",pair:"USDJPY",rr:-1},
+    {date:"27/03/2025",pair:"GBPUSD",rr:2},
+    {date:"01/04/2025",pair:"GBPUSD",rr:2},
+    {date:"15/05/2025",pair:"USDCAD",rr:-1},
+    {date:"06/06/2025",pair:"AUDUSD",rr:2},
+    {date:"16/06/2025",pair:"USDCHF",rr:-1},
+    {date:"08/07/2025",pair:"GBPUSD",rr:0},
+    {date:"04/08/2025",pair:"GBPUSD",rr:0},
+    {date:"11/08/2025",pair:"GBPUSD",rr:2},
+    {date:"19/08/2025",pair:"USDCHF",rr:2},
+    {date:"27/08/2025",pair:"GBPUSD",rr:2},
+    {date:"27/08/2025",pair:"AUDUSD",rr:2},
+    {date:"10/09/2025",pair:"AUDUSD",rr:0},
+    {date:"01/10/2025",pair:"EURUSD",rr:2},
+    {date:"01/10/2025",pair:"USDCHF",rr:2},
+    {date:"10/10/2025",pair:"GBPUSD",rr:2},
+    {date:"05/11/2025",pair:"EURUSD",rr:2},
+    {date:"10/11/2025",pair:"GBPUSD",rr:2},
+    {date:"12/11/2025",pair:"AUDUSD",rr:-1},
+    {date:"24/11/2025",pair:"EURUSD",rr:2}
+  ];
 
-let equity=[0], total=0;
-let tbody=document.querySelector("#tradeTable tbody");
+  // ---- BUILD STATS + TABLE + EQUITY CURVE ----
+  const tbody = document.getElementById("tradeTable");
+  const equity = [0];
+  let running = 0, wins = 0, losses = 0, be = 0;
+  let maxDD = 0, peak = 0;
 
-trades.forEach((t,i)=>{
- total+=t.rr;
- equity.push(total);
- let r = t.rr>0?"WIN":t.rr<0?"LOSS":"BE";
- let cls = r==="WIN"?"win":r==="LOSS"?"loss":"be";
- tbody.innerHTML += `<tr>
- <td>${i+1}</td><td>${t.date}</td><td>${t.pair}</td>
- <td><span class="pill ${cls}">${r}</span></td>
- <td>${t.rr>0?"+":""}${t.rr}R</td>
- </tr>`;
-});
+  trades.forEach((t, i) => {
+    running += t.rr;
+    equity.push(running);
 
-new Chart(document.getElementById("equityChart"),{
- type:"line",
- data:{labels:equity.map((_,i)=>i),datasets:[{data:equity,borderWidth:2,tension:.25,pointRadius:0}]},
- options:{plugins:{legend:{display:false}}}
-});
+    if (t.rr > 0) wins++;
+    else if (t.rr < 0) losses++;
+    else be++;
+
+    if (running > peak) peak = running;
+    const drawdown = peak - running;
+    if (drawdown > maxDD) maxDD = drawdown;
+
+    const rType = t.rr > 0 ? "WIN" : t.rr < 0 ? "LOSS" : "BE";
+    const cls = t.rr > 0 ? "win" : t.rr < 0 ? "loss" : "be";
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${t.date}</td>
+      <td>${t.pair}</td>
+      <td><span class="pill ${cls}">${rType}</span></td>
+      <td>${t.rr > 0 ? "+" : ""}${t.rr}R</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  const netR = running;
+  const wr = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
+
+  document.getElementById("stat-r").textContent = netR.toFixed(1) + "R";
+  document.getElementById("stat-wr").textContent = wr.toFixed(1) + "%";
+  document.getElementById("stat-trades").textContent = trades.length;
+  document.getElementById("stat-dd").textContent = "-" + maxDD.toFixed(1) + "R";
+
+  new Chart(document.getElementById("equityChart"), {
+    type: "line",
+    data: {
+      labels: equity.map((_, i) => i),
+      datasets: [{
+        data: equity,
+        borderWidth: 2.5,
+        tension: 0.25,
+        pointRadius: 0,
+        borderColor: "#38bdf8",
+        fill: true,
+        backgroundColor: "rgba(56,189,248,0.08)"
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          display: false
+        },
+        y: {
+          grid: { color: "rgba(55,65,81,0.6)" },
+          ticks: { color: "#9ca3af" }
+        }
+      }
+    }
+  });
 </script>
 
 </body>
